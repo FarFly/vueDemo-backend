@@ -17,7 +17,6 @@ HELP.md
 *.iml
 *.ipr
 *.yml
-generatorConfig.xml
 ### NetBeans ###
 /nbproject/private/
 /nbbuild/
