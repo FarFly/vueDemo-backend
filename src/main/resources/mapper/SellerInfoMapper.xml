@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fly.sell.dao.SellerInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.fly.sell.entity.SellerInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="seller_id" property="sellerId" jdbcType="INTEGER" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, create_time, update_time, seller_id, info
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from seller_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectBySellId" resultMap="BaseResultMap">
+    select
+    <include refid="Base_Column_List" />
+    from seller_info
+    where seller_id = #{id,jdbcType=INTEGER}
+  </select>
+
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from seller_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+
+  <insert id="insert" parameterType="com.fly.sell.entity.SellerInfo" >
+    insert into seller_info (id, create_time, update_time, 
+      seller_id, info)
+    values (#{id,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{sellerId,jdbcType=INTEGER}, #{info,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fly.sell.entity.SellerInfo" >
+    insert into seller_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="sellerId != null" >
+        seller_id,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sellerId != null" >
+        #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+
+  <update id="updateByPrimaryKeySelective" parameterType="com.fly.sell.entity.SellerInfo" >
+    update seller_info
+    <set >
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="sellerId != null" >
+        seller_id = #{sellerId,jdbcType=INTEGER},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fly.sell.entity.SellerInfo" >
+    update seller_info
+    set create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      seller_id = #{sellerId,jdbcType=INTEGER},
+      info = #{info,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

@@ -1,0 +1,253 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fly.sell.dao.SellerMasterMapper" >
+  <resultMap id="BaseResultMap" type="com.fly.sell.entity.SellerMaster" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="username" property="username" jdbcType="VARCHAR" />
+    <result column="password" property="password" jdbcType="VARCHAR" />
+    <result column="openid" property="openid" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="delivery_time" property="deliveryTime" jdbcType="INTEGER" />
+    <result column="score" property="score" jdbcType="DOUBLE" />
+    <result column="service_score" property="serviceScore" jdbcType="DOUBLE" />
+    <result column="food_score" property="foodScore" jdbcType="DOUBLE" />
+    <result column="rank_rate" property="rankRate" jdbcType="DOUBLE" />
+    <result column="min_price" property="minPrice" jdbcType="DOUBLE" />
+    <result column="delivery_price" property="deliveryPrice" jdbcType="DOUBLE" />
+    <result column="rating_count" property="ratingCount" jdbcType="INTEGER" />
+    <result column="sell_count" property="sellCount" jdbcType="INTEGER" />
+    <result column="bulletin" property="bulletin" jdbcType="VARCHAR" />
+    <result column="avatar" property="avatar" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, username, password, openid, create_time, update_time, name, description, delivery_time, 
+    score, service_score, food_score, rank_rate, min_price, delivery_price, rating_count, 
+    sell_count, bulletin, avatar
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from seller_master
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from seller_master
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fly.sell.entity.SellerMaster" >
+    insert into seller_master (id, username, password, 
+      openid, create_time, update_time, 
+      name, description, delivery_time, 
+      score, service_score, food_score, 
+      rank_rate, min_price, delivery_price, 
+      rating_count, sell_count, bulletin, 
+      avatar)
+    values (#{id,jdbcType=INTEGER}, #{username,jdbcType=VARCHAR}, #{password,jdbcType=VARCHAR}, 
+      #{openid,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}, 
+      #{name,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, #{deliveryTime,jdbcType=INTEGER}, 
+      #{score,jdbcType=DOUBLE}, #{serviceScore,jdbcType=DOUBLE}, #{foodScore,jdbcType=DOUBLE}, 
+      #{rankRate,jdbcType=DOUBLE}, #{minPrice,jdbcType=DOUBLE}, #{deliveryPrice,jdbcType=DOUBLE}, 
+      #{ratingCount,jdbcType=INTEGER}, #{sellCount,jdbcType=INTEGER}, #{bulletin,jdbcType=VARCHAR}, 
+      #{avatar,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.fly.sell.entity.SellerMaster" >
+    insert into seller_master
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        username,
+      </if>
+      <if test="password != null" >
+        password,
+      </if>
+      <if test="openid != null" >
+        openid,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="deliveryTime != null" >
+        delivery_time,
+      </if>
+      <if test="score != null" >
+        score,
+      </if>
+      <if test="serviceScore != null" >
+        service_score,
+      </if>
+      <if test="foodScore != null" >
+        food_score,
+      </if>
+      <if test="rankRate != null" >
+        rank_rate,
+      </if>
+      <if test="minPrice != null" >
+        min_price,
+      </if>
+      <if test="deliveryPrice != null" >
+        delivery_price,
+      </if>
+      <if test="ratingCount != null" >
+        rating_count,
+      </if>
+      <if test="sellCount != null" >
+        sell_count,
+      </if>
+      <if test="bulletin != null" >
+        bulletin,
+      </if>
+      <if test="avatar != null" >
+        avatar,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="username != null" >
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryTime != null" >
+        #{deliveryTime,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="serviceScore != null" >
+        #{serviceScore,jdbcType=DOUBLE},
+      </if>
+      <if test="foodScore != null" >
+        #{foodScore,jdbcType=DOUBLE},
+      </if>
+      <if test="rankRate != null" >
+        #{rankRate,jdbcType=DOUBLE},
+      </if>
+      <if test="minPrice != null" >
+        #{minPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="deliveryPrice != null" >
+        #{deliveryPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="ratingCount != null" >
+        #{ratingCount,jdbcType=INTEGER},
+      </if>
+      <if test="sellCount != null" >
+        #{sellCount,jdbcType=INTEGER},
+      </if>
+      <if test="bulletin != null" >
+        #{bulletin,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        #{avatar,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fly.sell.entity.SellerMaster" >
+    update seller_master
+    <set >
+      <if test="username != null" >
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="password != null" >
+        password = #{password,jdbcType=VARCHAR},
+      </if>
+      <if test="openid != null" >
+        openid = #{openid,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="deliveryTime != null" >
+        delivery_time = #{deliveryTime,jdbcType=INTEGER},
+      </if>
+      <if test="score != null" >
+        score = #{score,jdbcType=DOUBLE},
+      </if>
+      <if test="serviceScore != null" >
+        service_score = #{serviceScore,jdbcType=DOUBLE},
+      </if>
+      <if test="foodScore != null" >
+        food_score = #{foodScore,jdbcType=DOUBLE},
+      </if>
+      <if test="rankRate != null" >
+        rank_rate = #{rankRate,jdbcType=DOUBLE},
+      </if>
+      <if test="minPrice != null" >
+        min_price = #{minPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="deliveryPrice != null" >
+        delivery_price = #{deliveryPrice,jdbcType=DOUBLE},
+      </if>
+      <if test="ratingCount != null" >
+        rating_count = #{ratingCount,jdbcType=INTEGER},
+      </if>
+      <if test="sellCount != null" >
+        sell_count = #{sellCount,jdbcType=INTEGER},
+      </if>
+      <if test="bulletin != null" >
+        bulletin = #{bulletin,jdbcType=VARCHAR},
+      </if>
+      <if test="avatar != null" >
+        avatar = #{avatar,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fly.sell.entity.SellerMaster" >
+    update seller_master
+    set username = #{username,jdbcType=VARCHAR},
+      password = #{password,jdbcType=VARCHAR},
+      openid = #{openid,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      name = #{name,jdbcType=VARCHAR},
+      description = #{description,jdbcType=VARCHAR},
+      delivery_time = #{deliveryTime,jdbcType=INTEGER},
+      score = #{score,jdbcType=DOUBLE},
+      service_score = #{serviceScore,jdbcType=DOUBLE},
+      food_score = #{foodScore,jdbcType=DOUBLE},
+      rank_rate = #{rankRate,jdbcType=DOUBLE},
+      min_price = #{minPrice,jdbcType=DOUBLE},
+      delivery_price = #{deliveryPrice,jdbcType=DOUBLE},
+      rating_count = #{ratingCount,jdbcType=INTEGER},
+      sell_count = #{sellCount,jdbcType=INTEGER},
+      bulletin = #{bulletin,jdbcType=VARCHAR},
+      avatar = #{avatar,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

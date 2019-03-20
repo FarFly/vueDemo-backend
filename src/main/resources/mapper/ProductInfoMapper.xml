@@ -1,0 +1,217 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fly.sell.dao.ProductInfoMapper" >
+  <resultMap id="BaseResultMap" type="com.fly.sell.entity.ProductInfo" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="price" property="price" jdbcType="DECIMAL" />
+    <result column="stock" property="stock" jdbcType="INTEGER" />
+    <result column="info" property="info" jdbcType="VARCHAR" />
+    <result column="icon" property="icon" jdbcType="VARCHAR" />
+    <result column="status" property="status" jdbcType="TINYINT" />
+    <result column="category_id" property="categoryId" jdbcType="INTEGER" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+    <result column="old_price" property="oldPrice" jdbcType="DECIMAL" />
+    <result column="description" property="description" jdbcType="VARCHAR" />
+    <result column="rating" property="rating" jdbcType="DOUBLE" />
+    <result column="sell_count" property="sellCount" jdbcType="INTEGER" />
+    <result column="image" property="image" jdbcType="VARCHAR" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, name, price, stock, info, icon, status, category_id, create_time, update_time, 
+    old_price, description, rating, sell_count, image
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from product_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <select id="selectAll" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from product_info
+  </select>
+  <select id="selectAllOnSelf" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from product_info
+    where status = 0
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from product_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fly.sell.entity.ProductInfo" >
+    insert into product_info (id, name, price, 
+      stock, info, icon, 
+      status, category_id, create_time, 
+      update_time, old_price, description, 
+      rating, sell_count, image
+      )
+    values (#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR}, #{price,jdbcType=DECIMAL}, 
+      #{stock,jdbcType=INTEGER}, #{info,jdbcType=VARCHAR}, #{icon,jdbcType=VARCHAR}, 
+      #{status,jdbcType=TINYINT}, #{categoryId,jdbcType=INTEGER}, #{createTime,jdbcType=TIMESTAMP}, 
+      #{updateTime,jdbcType=TIMESTAMP}, #{oldPrice,jdbcType=DECIMAL}, #{description,jdbcType=VARCHAR}, 
+      #{rating,jdbcType=DOUBLE}, #{sellCount,jdbcType=INTEGER}, #{image,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fly.sell.entity.ProductInfo" >
+    insert into product_info
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        name,
+      </if>
+      <if test="price != null" >
+        price,
+      </if>
+      <if test="stock != null" >
+        stock,
+      </if>
+      <if test="info != null" >
+        info,
+      </if>
+      <if test="icon != null" >
+        icon,
+      </if>
+      <if test="status != null" >
+        status,
+      </if>
+      <if test="categoryId != null" >
+        category_id,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+      <if test="oldPrice != null" >
+        old_price,
+      </if>
+      <if test="description != null" >
+        description,
+      </if>
+      <if test="rating != null" >
+        rating,
+      </if>
+      <if test="sellCount != null" >
+        sell_count,
+      </if>
+      <if test="image != null" >
+        image,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="name != null" >
+        #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null" >
+        #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="info != null" >
+        #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="categoryId != null" >
+        #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oldPrice != null" >
+        #{oldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null" >
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="rating != null" >
+        #{rating,jdbcType=DOUBLE},
+      </if>
+      <if test="sellCount != null" >
+        #{sellCount,jdbcType=INTEGER},
+      </if>
+      <if test="image != null" >
+        #{image,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fly.sell.entity.ProductInfo" >
+    update product_info
+    <set >
+      <if test="name != null" >
+        name = #{name,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null" >
+        price = #{price,jdbcType=DECIMAL},
+      </if>
+      <if test="stock != null" >
+        stock = #{stock,jdbcType=INTEGER},
+      </if>
+      <if test="info != null" >
+        info = #{info,jdbcType=VARCHAR},
+      </if>
+      <if test="icon != null" >
+        icon = #{icon,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null" >
+        status = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="categoryId != null" >
+        category_id = #{categoryId,jdbcType=INTEGER},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="oldPrice != null" >
+        old_price = #{oldPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="description != null" >
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="rating != null" >
+        rating = #{rating,jdbcType=DOUBLE},
+      </if>
+      <if test="sellCount != null" >
+        sell_count = #{sellCount,jdbcType=INTEGER},
+      </if>
+      <if test="image != null" >
+        image = #{image,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fly.sell.entity.ProductInfo" >
+    update product_info
+    set name = #{name,jdbcType=VARCHAR},
+      price = #{price,jdbcType=DECIMAL},
+      stock = #{stock,jdbcType=INTEGER},
+      info = #{info,jdbcType=VARCHAR},
+      icon = #{icon,jdbcType=VARCHAR},
+      status = #{status,jdbcType=TINYINT},
+      category_id = #{categoryId,jdbcType=INTEGER},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+      old_price = #{oldPrice,jdbcType=DECIMAL},
+      description = #{description,jdbcType=VARCHAR},
+      rating = #{rating,jdbcType=DOUBLE},
+      sell_count = #{sellCount,jdbcType=INTEGER},
+      image = #{image,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>

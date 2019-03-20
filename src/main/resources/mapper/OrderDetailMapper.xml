@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fly.sell.dao.OrderDetailMapper" >
+  <resultMap id="BaseResultMap" type="com.fly.sell.entity.OrderDetail" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="order_id" property="orderId" jdbcType="INTEGER" />
+    <result column="product_id" property="productId" jdbcType="INTEGER" />
+    <result column="product_name" property="productName" jdbcType="VARCHAR" />
+    <result column="product_price" property="productPrice" jdbcType="DECIMAL" />
+    <result column="product_quantity" property="productQuantity" jdbcType="INTEGER" />
+    <result column="product_icon" property="productIcon" jdbcType="VARCHAR" />
+    <result column="create_time" property="createTime" jdbcType="TIMESTAMP" />
+    <result column="update_time" property="updateTime" jdbcType="TIMESTAMP" />
+  </resultMap>
+  <sql id="Base_Column_List" >
+    id, order_id, product_id, product_name, product_price, product_quantity, product_icon, 
+    create_time, update_time
+  </sql>
+  <select id="selectByPrimaryKey" resultMap="BaseResultMap" parameterType="java.lang.Integer" >
+    select 
+    <include refid="Base_Column_List" />
+    from order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
+    delete from order_detail
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <insert id="insert" parameterType="com.fly.sell.entity.OrderDetail" >
+    insert into order_detail (id, order_id, product_id, 
+      product_name, product_price, product_quantity, 
+      product_icon, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{productId,jdbcType=INTEGER}, 
+      #{productName,jdbcType=VARCHAR}, #{productPrice,jdbcType=DECIMAL}, #{productQuantity,jdbcType=INTEGER}, 
+      #{productIcon,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.fly.sell.entity.OrderDetail" >
+    insert into order_detail
+    <trim prefix="(" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        id,
+      </if>
+      <if test="orderId != null" >
+        order_id,
+      </if>
+      <if test="productId != null" >
+        product_id,
+      </if>
+      <if test="productName != null" >
+        product_name,
+      </if>
+      <if test="productPrice != null" >
+        product_price,
+      </if>
+      <if test="productQuantity != null" >
+        product_quantity,
+      </if>
+      <if test="productIcon != null" >
+        product_icon,
+      </if>
+      <if test="createTime != null" >
+        create_time,
+      </if>
+      <if test="updateTime != null" >
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides="," >
+      <if test="id != null" >
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null" >
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productQuantity != null" >
+        #{productQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="productIcon != null" >
+        #{productIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <update id="updateByPrimaryKeySelective" parameterType="com.fly.sell.entity.OrderDetail" >
+    update order_detail
+    <set >
+      <if test="orderId != null" >
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="productId != null" >
+        product_id = #{productId,jdbcType=INTEGER},
+      </if>
+      <if test="productName != null" >
+        product_name = #{productName,jdbcType=VARCHAR},
+      </if>
+      <if test="productPrice != null" >
+        product_price = #{productPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="productQuantity != null" >
+        product_quantity = #{productQuantity,jdbcType=INTEGER},
+      </if>
+      <if test="productIcon != null" >
+        product_icon = #{productIcon,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null" >
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null" >
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.fly.sell.entity.OrderDetail" >
+    update order_detail
+    set order_id = #{orderId,jdbcType=INTEGER},
+      product_id = #{productId,jdbcType=INTEGER},
+      product_name = #{productName,jdbcType=VARCHAR},
+      product_price = #{productPrice,jdbcType=DECIMAL},
+      product_quantity = #{productQuantity,jdbcType=INTEGER},
+      product_icon = #{productIcon,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+</mapper>
