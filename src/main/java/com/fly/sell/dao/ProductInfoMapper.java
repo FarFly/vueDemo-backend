@@ -1,6 +1,7 @@
 package com.fly.sell.dao;
 
 import com.fly.sell.entity.ProductInfo;
+import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
 
@@ -16,6 +17,8 @@ public interface ProductInfoMapper {
     List<ProductInfo> selectAll();
 
     List<ProductInfo> selectAllOnSelf();
+
+    List<ProductInfo> batchQueryByIds(@Param("ids") List<Integer> ids);
 
     int updateByPrimaryKeySelective(ProductInfo record);
 

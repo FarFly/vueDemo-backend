@@ -1,9 +1,7 @@
 package com.fly.sell.service;
 
-import org.springframework.stereotype.Service;
+import com.fly.sell.form.ProductForm;
 
-@Service
-public class OrderService {
-
-
+public interface OrderService {
+    void createOrder(ProductForm productForm, Integer tableId);
 }

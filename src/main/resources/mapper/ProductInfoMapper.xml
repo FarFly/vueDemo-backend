@@ -39,6 +39,16 @@
     from product_info
     where status = 0
   </select>
+  <select id="batchQueryByIds" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from product_info
+    where id in
+    <foreach item="item" index="index" collection="ids" open="(" separator="," close=")">
+    #{item}
+    </foreach>
+  </select>
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from product_info
     where id = #{id,jdbcType=INTEGER}

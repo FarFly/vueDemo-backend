@@ -28,7 +28,7 @@
     delete from order_master
     where id = #{id,jdbcType=INTEGER}
   </delete>
-  <insert id="insert" parameterType="com.fly.sell.entity.OrderMaster" >
+  <insert id="insert" parameterType="com.fly.sell.entity.OrderMaster" useGeneratedKeys="true" >
     insert into order_master (id, buyer_name, buyer_phone, 
       buyer_address, buyer_openid, order_amount, 
       order_status, pay_status, create_time, 
@@ -38,7 +38,7 @@
       #{orderStatus,jdbcType=TINYINT}, #{payStatus,jdbcType=TINYINT}, #{createTime,jdbcType=TIMESTAMP}, 
       #{updateTime,jdbcType=TIMESTAMP}, #{tableId,jdbcType=INTEGER})
   </insert>
-  <insert id="insertSelective" parameterType="com.fly.sell.entity.OrderMaster" >
+  <insert id="insertSelective" parameterType="com.fly.sell.entity.OrderMaster" useGeneratedKeys="true" keyProperty="id">
     insert into order_master
     <trim prefix="(" suffix=")" suffixOverrides="," >
       <if test="id != null" >
