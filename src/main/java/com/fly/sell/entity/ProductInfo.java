@@ -1,24 +1,32 @@
 package com.fly.sell.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fly.sell.enums.ProductStatusEnum;
+import com.fly.sell.utils.EnumUtil;
 import lombok.Data;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
 import java.util.Date;
 @Data
 public class ProductInfo {
     private Integer id;
 
+    @NotEmpty(message = "名称不能为空")
     private String name;
 
+    @NotNull(message = "价格必须填写")
     private BigDecimal price;
 
+    @NotNull(message = "库存必须填写")
     private Integer stock;
 
     private String info;
 
     private String icon;
 
-    private Byte status;
+    private Integer status;
 
     private Integer categoryId;
 
@@ -35,4 +43,9 @@ public class ProductInfo {
     private Integer sellCount;
 
     private String image;
+
+    @JsonIgnore
+    public ProductStatusEnum getProductStatusEnum() {
+        return EnumUtil.getByCode(status, ProductStatusEnum.class);
+    }
 }

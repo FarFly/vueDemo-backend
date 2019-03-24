@@ -14,6 +14,10 @@ public interface ProductInfoMapper {
 
     ProductInfo selectByPrimaryKey(Integer id);
 
+    Integer pageQueryCount();
+
+    List<ProductInfo> pageQuery(@Param("index") Integer index, @Param("size") Integer size);
+
     List<ProductInfo> selectAll();
 
     List<ProductInfo> selectAllOnSelf();

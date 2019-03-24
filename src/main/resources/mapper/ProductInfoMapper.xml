@@ -48,6 +48,16 @@
     #{item}
     </foreach>
   </select>
+  <select id="pageQueryCount" resultType="integer">
+    SELECT  count(*)
+    FROM product_info
+  </select>
+  <select id="pageQuery" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from product_info
+    LIMIT #{index}, #{size}
+  </select>
 
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from product_info
