@@ -1,16 +1,22 @@
 package com.fly.sell.service.serviceImpl;
 
-import com.fly.sell.common.LocalStore;
+import com.fly.sell.common.Page;
+import com.fly.sell.converter.OrderMaster2OrderDTOConverter;
 import com.fly.sell.dao.OrderDetailMapper;
 import com.fly.sell.dao.OrderMasterMapper;
 import com.fly.sell.dao.ProductInfoMapper;
+import com.fly.sell.dto.OrderDTO;
 import com.fly.sell.entity.OrderDetail;
 import com.fly.sell.entity.OrderMaster;
 import com.fly.sell.entity.ProductInfo;
+import com.fly.sell.enums.OrderStatusEnum;
 import com.fly.sell.exception.SellException;
 import com.fly.sell.form.ItemsForm;
 import com.fly.sell.form.ProductForm;
 import com.fly.sell.service.OrderService;
+import lombok.extern.java.Log;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.stereotype.Service;
@@ -24,6 +30,7 @@ import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     @Autowired
@@ -92,4 +99,81 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    @Override
+    public Page<List<OrderDTO>> pageQuery(Page<List<OrderDTO>> page) {
+
+        Integer totalCount = orderMasterMapper.pageQueryCount();
+        page.setTotalCount(totalCount);
+
+        if(totalCount == 0){
+            page.setTotalPages(0);
+            return  page;
+        }
+
+        List<OrderMaster> orderMasters = orderMasterMapper.pageQuery(page.getIndex(), page.getSize());
+        List<OrderDTO> orderDTOS = OrderMaster2OrderDTOConverter.convert(orderMasters);
+        page.setData(orderDTOS);
+
+        Integer totalPages = totalCount % page.getSize() == 0 ? totalCount / page.getSize() : totalCount / page.getSize() + 1;
+        page.setTotalPages(totalPages);
+        return page;
+    }
+
+    @Override
+    @Transactional
+    public void cancel(Integer id) {
+        OrderMaster order = orderMasterMapper.selectByPrimaryKey(id);
+        if(order == null){
+            log.error("【卖家端取消订单】 查询不到订单");
+            throw new SellException(11, "当前订单不存在");
+        }
+
+        if(!OrderStatusEnum.NEW.getCode().equals(order.getOrderStatus())){
+            log.error("订单状态不合理");
+            throw new SellException(12, "订单状态不合理");
+        }
+
+        OrderMaster orderMaster = new OrderMaster();
+        orderMaster.setId(id);
+        orderMaster.setOrderStatus(OrderStatusEnum.CANCEL.getCode());
+        orderMasterMapper.updateByPrimaryKeySelective(orderMaster);
+    }
+
+    @Override
+    public OrderDTO selectByPrimaryKey(Integer id) {
+        OrderDTO orderDTO = new OrderDTO();
+        OrderMaster orderMaster = orderMasterMapper.selectByPrimaryKey(id);
+        if(orderMaster == null){
+            log.error("【卖家端取消订单】 查询不到订单");
+            throw new SellException(11, "当前订单不存在");
+        }
+
+        BeanUtils.copyProperties(orderMaster, orderDTO);
+
+        List<OrderDetail> orderDetailList = orderDetailMapper.selectByOrderId(orderMaster.getId());
+        orderDTO.setOrderDetailList(orderDetailList);
+
+        return orderDTO;
+    }
+
+
+    @Override
+    @Transactional
+    public void finish(Integer id) {
+        OrderMaster order = orderMasterMapper.selectByPrimaryKey(id);
+        if(order == null){
+            log.error("【卖家端取消订单】 查询不到订单");
+            throw new SellException(11, "当前订单不存在");
+        }
+
+        if(!OrderStatusEnum.NEW.getCode().equals(order.getOrderStatus())){
+            log.error("订单状态不合理");
+            throw new SellException(12, "订单状态不合理");
+        }
+
+        OrderMaster orderMaster = new OrderMaster();
+        orderMaster.setId(id);
+        orderMaster.setOrderStatus(OrderStatusEnum.FINISHED.getCode());
+        orderMasterMapper.updateByPrimaryKeySelective(orderMaster);
+    }
 }

@@ -24,6 +24,21 @@
     from order_master
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="pageQueryCount" resultType="integer">
+    SELECT  count(*)
+    FROM order_master
+  </select>
+
+  <select id="pageQuery" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from order_master
+    LIMIT #{index}, #{size}
+  </select>
+
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from order_master
     where id = #{id,jdbcType=INTEGER}
@@ -41,9 +56,6 @@
   <insert id="insertSelective" parameterType="com.fly.sell.entity.OrderMaster" useGeneratedKeys="true" keyProperty="id">
     insert into order_master
     <trim prefix="(" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        id,
-      </if>
       <if test="buyerName != null" >
         buyer_name,
       </if>
@@ -76,9 +88,6 @@
       </if>
     </trim>
     <trim prefix="values (" suffix=")" suffixOverrides="," >
-      <if test="id != null" >
-        #{id,jdbcType=INTEGER},
-      </if>
       <if test="buyerName != null" >
         #{buyerName,jdbcType=VARCHAR},
       </if>

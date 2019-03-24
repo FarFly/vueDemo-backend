@@ -14,6 +14,8 @@ public interface OrderDetailMapper {
 
     OrderDetail selectByPrimaryKey(Integer id);
 
+    List<OrderDetail>selectByOrderId(Integer id);
+
     int batchInsert(@Param("orderDetailList") List<OrderDetail> orderDetailList);
 
     int updateByPrimaryKeySelective(OrderDetail record);
