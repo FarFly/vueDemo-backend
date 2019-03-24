@@ -1,12 +1,16 @@
 package com.fly.sell.entity;
 
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
 import java.util.Date;
 
 public class ProductCategory {
     private Integer id;
 
+    @NotEmpty(message = "name不能为空")
     private String name;
 
+    @NotNull(message = "type不能为空")
     private Integer type;
 
     private Date createTime;
