@@ -39,6 +39,9 @@ public class GoodsServiceImpl implements GoodsService {
             BeanUtils.copyProperties(productCategory, goodsVO);
 
             List<ProductInfo> productInfoListByCategoryId = productInfoOnSelfMap.get(productCategory.getId());
+            if(productInfoListByCategoryId == null){
+                continue;
+            }
             List<ProductInfoVO> productInfoVOList = new ArrayList<>();
             for(ProductInfo productInfo : productInfoListByCategoryId){
                 ProductInfoVO productInfoVO = new ProductInfoVO();

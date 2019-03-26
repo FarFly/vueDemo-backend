@@ -33,6 +33,15 @@
     from seller_master
     where id = #{id,jdbcType=INTEGER}
   </select>
+
+  <select id="login" resultMap="BaseResultMap" >
+    select
+    <include refid="Base_Column_List" />
+    from seller_master
+    where username = #{username} and password = #{password}
+  </select>
+
+
   <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer" >
     delete from seller_master
     where id = #{id,jdbcType=INTEGER}

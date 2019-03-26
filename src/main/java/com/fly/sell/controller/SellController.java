@@ -11,7 +11,7 @@ import javax.servlet.http.HttpServletRequest;
 @RestController()
 @RequestMapping("/seller")
 @CrossOrigin
-public class SellerController {
+public class SellController {
 
     @Autowired
     private SellerService sellerService;

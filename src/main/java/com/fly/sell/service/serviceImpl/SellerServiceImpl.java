@@ -50,5 +50,10 @@ public class SellerServiceImpl implements SellerService {
         return sellerVO;
     }
 
+    @Override
+    public SellerMaster login(String username, String password) {
+        return sellerMasterMapper.login(username, password);
+    }
+
 
 }
