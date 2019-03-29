@@ -2,26 +2,36 @@ package com.fly.sell.controller;
 import com.fly.sell.common.Page;
 import com.fly.sell.entity.ProductCategory;
 import com.fly.sell.entity.ProductInfo;
+import com.fly.sell.enums.FilePathEnum;
 import com.fly.sell.exception.SellException;
+import com.fly.sell.form.ProductSaveForm;
 import com.fly.sell.service.CategoryService;
 import com.fly.sell.service.ProductService;
+import com.fly.sell.utils.ImgUtils;
+import com.sun.imageio.plugins.common.ImageUtil;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.FileCopyUtils;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.validation.Valid;
+import java.io.File;
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
 
 @Controller
 @RequestMapping("/seller/product")
+@Slf4j
 public class SellerProductController {
 
     @Autowired
@@ -115,9 +125,27 @@ public class SellerProductController {
      * @return
      */
     @PostMapping("/save")
-    public ModelAndView save(@Valid ProductInfo form,
+    public ModelAndView save(@Valid ProductSaveForm form,
                              BindingResult bindingResult,
                              Map<String, Object> map) {
+        if(form.getImgFile() != null){
+            String imgPath = ImgUtils.getImgPath(form.getImgFile().getOriginalFilename(), FilePathEnum.IMG.getPath());
+            try {
+                FileCopyUtils.copy(form.getImgFile().getBytes(), new File(imgPath));
+            } catch (IOException e) {
+                log.error("文件复制出错");
+            }
+            form.setImage("/sell/" + imgPath);
+        }
+        if(form.getIconFile() != null){
+            String iconPath = ImgUtils.getImgPath(form.getIconFile().getOriginalFilename(), FilePathEnum.ICON.getPath());
+            try {
+                FileCopyUtils.copy(form.getIconFile().getBytes(), new File(iconPath));
+            } catch (IOException e) {
+                log.error("文件复制出错");
+            }
+            form.setIcon("/sell/" + iconPath);
+        }
         if (bindingResult.hasErrors()) {
             map.put("msg", bindingResult.getFieldError().getDefaultMessage());
             if(form.getId() == null){
@@ -137,7 +165,9 @@ public class SellerProductController {
                 productService.update(productInfo);
             } else {
                 // 新增
-                productService.insert(form);
+                ProductInfo productInfo = new ProductInfo();
+                BeanUtils.copyProperties(form, productInfo);
+                productService.insert(productInfo);
             }
         } catch (SellException e) {
             map.put("msg", e.getMessage());

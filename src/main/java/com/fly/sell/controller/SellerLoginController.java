@@ -48,4 +48,11 @@ public class SellerLoginController {
         }
     }
 
+    @GetMapping("/logout")
+    public ModelAndView logout(HttpSession httpSession){
+        httpSession.removeAttribute("user");
+        return new ModelAndView("account/login");
+    }
+
+
 }

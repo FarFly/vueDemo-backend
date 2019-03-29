@@ -12,7 +12,7 @@
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-md-12 column">
-                    <form role="form" method="post" action="/sell/seller/product/save">
+                    <form role="form" method="post" action="/sell/seller/product/save" enctype="multipart/form-data" >
                         <div class="form-group">
                             <label>名称</label>
                             <input name="name" type="text" class="form-control" value="${(productInfo.name)!''}"/>
@@ -35,18 +35,32 @@
                         </div>
                         <div class="form-group">
                             <label>图标</label>
-                            <input name="icon" type="text" class="form-control" value="${(productInfo.icon)!''}"/>
+                            <img height="100" width="100" src="${(productInfo.icon)!''}" alt="">
+                            <input name="iconFile" type="file" class="form-control"/>
                         </div>
                         <div class="form-group">
                             <label>图片</label>
-                            <input name="image" type="text" class="form-control" value="${(productInfo.image)!''}"/>
+                            <img height="100" width="100" src="${(productInfo.image)!''}" alt="">
+                            <input name="imgFile" type="file" class="form-control"/>
                         </div>
                         <#--<div class="form-group">-->
                             <#--<label>图片</label>-->
-                            <#--<input id="productIcon" name="productIcon" type="text" hidden="hidden" value="${(productInfo.icon)!''}"/>-->
+                            <#--<input name="image" type="text" class="form-control" value="${(productInfo.image)!''}"/>-->
+                        <#--</div>-->
+                        <#--<div class="form-group">-->
+                            <#--<label>图片</label>-->
+                            <#--<input id="image" name="image" type="text" hidden="hidden" value="${(productInfo.image)!''}"/>-->
+                            <#--<div class="file-loading">-->
+                                <#--<input id="input-id" type="file" name="file">-->
+                                <#--<p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过1M</p>-->
+                            <#--</div>-->
+                        <#--</div>-->
+                        <#--<div class="form-group">-->
+                            <#--<label>图片</label>-->
+                            <#--<input id="icon" name="icon" type="text" hidden="hidden" value="${(productInfo.icon)!''}"/>-->
 
                             <#--<div class="file-loading">-->
-                                <#--<input id="input-id" type="file">-->
+                                <#--<input id="input-id" type="file" name="file">-->
                                 <#--<p class="help-block">支持jpg、jpeg、png、gif格式，大小不超过1M</p>-->
                             <#--</div>-->
                         <#--</div>-->
@@ -95,16 +109,16 @@
             <#--autoReplace: true,-->
             <#--overwriteInitial: true,-->
             <#--maxFileCount: 1,-->
-            <#--initialPreview: initialPreview,-->
+            <#--initialPreview: initialPreview-->
         <#--});-->
     <#--});-->
-    <#--//上传完成设置表单内容-->
+<#--//    上传完成设置表单内容-->
     <#--$('#input-id').on('fileuploaded', function(event, data, previewId, index) {-->
-        <#--if (data.response.code != 0) {-->
+        <#--if (data.response.errno != 0) {-->
             <#--alert(data.response.msg)-->
             <#--return-->
         <#--}-->
-        <#--$('#productIcon').val(data.response.data.fileName)-->
+        <#--$('#icon').val(data.response.data.fileName)-->
     <#--});-->
 </script>
 </body>

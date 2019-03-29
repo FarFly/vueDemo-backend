@@ -2,13 +2,18 @@ package com.fly.sell;
 
 import com.fly.sell.dao.*;
 import com.fly.sell.entity.*;
+import com.fly.sell.enums.FilePathEnum;
+import com.fly.sell.utils.ImgUtils;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.util.FileCopyUtils;
 
+import java.io.File;
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.concurrent.TimeUnit;
 
@@ -267,6 +272,30 @@ public class SellApplicationTests {
 		redisTemplate.opsForValue().setIfPresent("hhh", "111", 1000, TimeUnit.MILLISECONDS);
 		System.out.println(redisTemplate.opsForValue().get("hhh"));
 	}
+
+	@Test
+	public void testFile() throws IOException {
+		File file1 = new File("img/img1.jpg");
+
+		String imgPath = ImgUtils.getImgPath(file1.getName(), FilePathEnum.ICON.getPath());
+		System.out.println(imgPath);
+		File file2 = new File(imgPath);
+//		System.out.println("name-->" + file1.getName());
+//		System.out.println("path-->" + file1.getPath());
+//		System.out.println("CanonicalPath-->" + file1.getCanonicalPath());
+//		System.out.println("getCanonicalFile-->" + file1.getCanonicalFile());
+//		System.out.println("getAbsolutePath-->" + file1.getAbsolutePath());
+//		System.out.println("getAbsoluteFile-->" + file1.getAbsoluteFile());
+//		System.out.println("getAbsolutePath-->" + file1.getAbsolutePath());
+		System.out.println(imgPath);
+		try {
+			FileCopyUtils.copy(file1, file2);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+//		FileCopyUtils
+	}
+
 
 
 }

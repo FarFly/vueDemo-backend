@@ -19,6 +19,8 @@ public class ProductInfoVO {
 
     private String icon;
 
+    private String image;
+
     private Byte status;
 
     private Integer categoryId;
